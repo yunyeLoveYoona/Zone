@@ -11,8 +11,12 @@ import java.util.Random;
  */
 public class ZoneModel {
     public String defaultKey;
+    protected int lineNum;
 
-    public void save() {
+    /**
+     * @throws NullPointerException
+     */
+    public void saveOrUpdate() throws NullPointerException {
         boolean isNew = false;
         Class<?> modelClass = getClass();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -27,15 +31,21 @@ public class ZoneModel {
             StringBuffer modelBuffer = new StringBuffer();
             for (Field field : fields) {
                 if (field.get(this) != null) {
-
-                    modelBuffer.append(field.getName()).append(":").append(field.get(this)).append(",");
+                    if (field.getType() == ZoneHelper.class) {
+                        ZoneHelper zoneHelper = (ZoneHelper) field.get(this);
+                        modelBuffer.append(field.getName()).append(":").append(zoneHelper.toString()).append(",");
+                    } else {
+                        modelBuffer.append(field.getName()).append(":").append(field.get(this)).append(",");
+                    }
 
                 }
             }
             Zone.saveOrUpdate(modelClass, this);
             File file = FileUtil.createFile(Zone.getInstance().context, Zone.getInstance().userName, getClass().getName());
             if (isNew) {
-                FileUtil.write(modelBuffer.toString(), file);
+                FileUtil.write(modelBuffer.toString().replace("\n", "@#$"), file);
+            } else {
+                FileUtil.update(file, modelBuffer.toString().replace("\n", "@#$"), this.lineNum);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();

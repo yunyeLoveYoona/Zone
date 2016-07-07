@@ -2,8 +2,13 @@ package com.yun.zone.core;
 
 import android.content.Context;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 
 /**
@@ -33,7 +38,7 @@ public class FileUtil {
     }
 
     protected static void write(String content, File file) {
-        String strContent = new StringBuffer(content).append("\n\r").toString();
+        String strContent = new StringBuffer(content).append("\n").toString();
         try {
             RandomAccessFile raf = new RandomAccessFile(file, "rwd");
             raf.seek(file.length());
@@ -42,6 +47,39 @@ public class FileUtil {
         } catch (Exception e) {
 
         }
+    }
+
+    protected static void update(File file, String content, int line) {
+        int num = 0;
+        StringBuffer stringBuffer = new StringBuffer();
+        InputStreamReader read = null;
+        try {
+            read = new InputStreamReader(
+                    new FileInputStream(file));
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt = null;
+            while ((lineTxt = bufferedReader.readLine()) != null) {
+                num = num + 1;
+                if (num != line) {
+                    stringBuffer.append(lineTxt).append("\n");
+                } else {
+                    stringBuffer.append(content).append("\n");
+                }
+            }
+            read.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.write(stringBuffer.toString().getBytes());
+            raf.close();
+        } catch (Exception e) {
+
+        }
+
     }
 
     protected static String read(File file) {

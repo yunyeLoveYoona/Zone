@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 
@@ -81,6 +80,44 @@ public class FileUtil {
         }
 
     }
+
+
+    protected static void deleteLine(File file, int line) {
+        int num = 0;
+        StringBuffer stringBuffer = new StringBuffer();
+        InputStreamReader read = null;
+        try {
+            read = new InputStreamReader(
+                    new FileInputStream(file));
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt = null;
+            while ((lineTxt = bufferedReader.readLine()) != null) {
+                num = num + 1;
+                if (num != line) {
+                    stringBuffer.append(lineTxt).append("\n");
+                }
+            }
+            read.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path = file.getPath();
+        file.delete();
+        file = new File(path);
+        try {
+            file.createNewFile();
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.write(stringBuffer.toString().getBytes());
+            raf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     protected static String read(File file) {
         String res = "";

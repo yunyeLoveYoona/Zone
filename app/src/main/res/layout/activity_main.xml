@@ -16,6 +16,13 @@
         android:layout_height="wrap_content"
         android:text="添加一个TestModel" />
 
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="删除一个TestModel" />
+
     <Button
         android:id="@+id/get"
         android:layout_width="wrap_content"
@@ -42,4 +49,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="按条件排序" />
+
+
+    <Button
+        android:id="@+id/changeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="切换用户" />
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.yun.zone.core;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -83,6 +84,7 @@ public class Zone {
     private void initData() {
         dataCache = new HashMap<String, List<ZoneModel>>();
         File[] files = FileUtil.getFiles(context, userName);
+        long startTime = System.currentTimeMillis();
         if (files != null && files.length > 0) {
             for (File file : files) {
                 lineNum = 1;
@@ -95,6 +97,9 @@ public class Zone {
                 dataCache.put(fileName, zoneModels);
             }
         }
+        long endTime = System.currentTimeMillis();
+        long time = endTime - startTime;
+        Log.v("time", time + "");
     }
 
     /**
@@ -270,6 +275,22 @@ public class Zone {
             model.lineNum = _this.dataCache.get(modelClass.getName()).size();
         } else {
             _this.update(modelClass, oldModel, model);
+        }
+    }
+
+
+    protected static boolean delete(Class modelClass, ZoneModel model) {
+        ZoneModel oldModel = _this.find(modelClass, model);
+        if (oldModel == null) {
+            return false;
+        } else {
+            _this.dataCache.get(modelClass.getName()).remove(oldModel);
+            for (ZoneModel zoneModel : _this.dataCache.get(modelClass.getName())) {
+                if (zoneModel.lineNum > model.lineNum) {
+                    zoneModel.lineNum = zoneModel.lineNum - 1;
+                }
+            }
+            return true;
         }
     }
 

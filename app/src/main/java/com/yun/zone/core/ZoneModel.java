@@ -16,7 +16,7 @@ public class ZoneModel {
     /**
      * @throws NullPointerException
      */
-    public void saveOrUpdate() throws NullPointerException {
+    public synchronized void saveOrUpdate() throws NullPointerException {
         boolean isNew = false;
         Class<?> modelClass = getClass();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -52,5 +52,15 @@ public class ZoneModel {
         }
     }
 
+    public synchronized boolean delete() {
+        if (defaultKey == null || lineNum == 0) {
+            return false;
+        }
+        if (Zone.delete(getClass(), this)) {
+            File file = FileUtil.createFile(Zone.getInstance().context, Zone.getInstance().userName, getClass().getName());
+            FileUtil.deleteLine(file, lineNum);
+        }
+        return true;
+    }
 
 }

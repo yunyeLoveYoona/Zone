@@ -84,7 +84,6 @@ public class Zone {
     private void initData() {
         dataCache = new HashMap<String, List<ZoneModel>>();
         File[] files = FileUtil.getFiles(context, userName);
-        long startTime = System.currentTimeMillis();
         if (files != null && files.length > 0) {
             for (File file : files) {
                 lineNum = 1;
@@ -97,9 +96,6 @@ public class Zone {
                 dataCache.put(fileName, zoneModels);
             }
         }
-        long endTime = System.currentTimeMillis();
-        long time = endTime - startTime;
-        Log.v("time", time + "");
     }
 
     /**

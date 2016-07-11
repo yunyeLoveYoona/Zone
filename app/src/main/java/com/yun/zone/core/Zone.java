@@ -176,7 +176,7 @@ public class Zone {
                     field.set(obj, Boolean.valueOf(variableValue));
                 } else if (type == ZoneHelper.class) {
                     Method method = type.getMethod("fromString", new Class[]{String.class});
-                    ZoneHelper zoneHelper = ZoneHelper.class.newInstance();
+                    ZoneHelper zoneHelper = (ZoneHelper) type.newInstance();
                     method.invoke(zoneHelper, variableValue);
                     field.set(obj, zoneHelper);
                 }

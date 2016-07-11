@@ -238,8 +238,11 @@ public class Zone {
      */
     private static void add(Class modelClass, ZoneModel model) {
         List<ZoneModel> temp = _this.dataCache.get(modelClass.getName());
-        if (temp != null)
+        if (temp != null) {
             model.lineNum = temp.size() + 1;
+        } else {
+            model.lineNum = 1;
+        }
         if (temp != null) {
             temp.add(model);
         } else {

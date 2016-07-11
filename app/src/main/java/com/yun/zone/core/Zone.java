@@ -1,7 +1,6 @@
 package com.yun.zone.core;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -115,7 +114,7 @@ public class Zone {
             String[] keyValues = modelStr.split(",");
             for (String keyValue : keyValues) {
                 String key = keyValue.substring(0, keyValue.indexOf(":"));
-                String value = keyValue.substring(keyValue.indexOf(":") + 1, keyValue.length());
+                String value = keyValue.substring(keyValue.indexOf(":") + 1, keyValue.length()).replace("@#$", "/n").replace("&^", ":").replace("*&", ",");
                 for (Field field : fields) {
                     if (key.equals(field.getName())) {
                         setVariables(obj, field, value);

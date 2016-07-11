@@ -33,9 +33,9 @@ public class ZoneModel {
                 if (field.get(this) != null) {
                     if (field.getType() == ZoneHelper.class) {
                         ZoneHelper zoneHelper = (ZoneHelper) field.get(this);
-                        modelBuffer.append(field.getName()).append(":").append(zoneHelper.toString()).append(",");
+                        modelBuffer.append(field.getName()).append(":").append(zoneHelper.toString().replace(":", "&^").replace(",", "*&")).append(",");
                     } else {
-                        modelBuffer.append(field.getName()).append(":").append(field.get(this)).append(",");
+                        modelBuffer.append(field.getName()).append(":").append(field.get(this).toString().replace(":", "&^").replace(",", "*&")).append(",");
                     }
 
                 }

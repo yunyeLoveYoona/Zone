@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 testModel.age = i * 10;
                 testModel.name = "test";
                 testModel.birthday = new Date();
-                testModel.test1 = "adafskfjahfasjkfhafjajfhkasfhashfhsjafhashfjkkjasfjajskfhaskfhka";
+                testModel.test1 = "adafskfjahfasjkfhafjajfhkasfhashfhsjafhashf,jkkjasfjajs:kfhaskfhka";
                 testModel.test2 = "adafskfjahfasjkfhafjajfhkasfhashfhsjafhashfjkkjasfjajskfhaskfhka";
                 testModel.test3 = "adafskfjahfasjkfhafjajfhkasfhashfhsjafhashfjkkjasfjajskfhaskfhka";
                 testModel.test4 = "adafskfjahfasjkfhafjajfhkasfhashfhsjafhashfjkkjasfjajskfhaskfhka";

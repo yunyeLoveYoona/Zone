@@ -480,11 +480,8 @@ public class Zone {
     }
 
 
-    public static List orderBy(Class modelClass, final String sortField, final String sortMode) {
-        List<ZoneModel> temp = findAll(modelClass);
-        if (temp.size() < 1) {
-            return null;
-        }
+    public static List orderBy(List<ZoneModel> zoneModels, Class modelClass, final String sortField, final String sortMode) {
+        List<ZoneModel> temp = zoneModels;
         Collections.sort(temp, new Comparator<ZoneModel>() {
             @Override
             public int compare(ZoneModel o1, ZoneModel o2) {
@@ -551,6 +548,15 @@ public class Zone {
             }
         });
         return temp;
+    }
+
+
+    public static List orderBy(Class modelClass, final String sortField, final String sortMode) {
+        List<ZoneModel> temp = findAll(modelClass);
+        if (temp.size() < 1) {
+            return null;
+        }
+        return orderBy(temp, modelClass, sortField, sortMode);
     }
 
 

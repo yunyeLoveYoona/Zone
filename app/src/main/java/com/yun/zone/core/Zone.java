@@ -88,12 +88,15 @@ public class Zone {
             for (File file : files) {
                 lineNum = 1;
                 String fileName = file.getName();
-                String[] modelStrList = FileUtil.read(file).split("\n");
-                List<ZoneModel> zoneModels = new ArrayList<ZoneModel>();
-                for (String modelStr : modelStrList) {
-                    zoneModels.add(getModel(fileName, modelStr));
+                String content = FileUtil.read(file);
+                if (content.length() > 1) {
+                    String[] modelStrList = content.split("\n");
+                    List<ZoneModel> zoneModels = new ArrayList<ZoneModel>();
+                    for (String modelStr : modelStrList) {
+                        zoneModels.add(getModel(fileName, modelStr));
+                    }
+                    dataCache.put(fileName, zoneModels);
                 }
-                dataCache.put(fileName, zoneModels);
             }
         }
     }

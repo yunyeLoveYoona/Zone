@@ -1,6 +1,7 @@
 # Zone
 Android 文件型数据库
 
+Swift版 看这里  https://github.com/yunyeLoveYoona/Zone-Swift/tree/master 
 
 Zone是一个文件型数据库，针对业务逻辑较简单以及数据量级较小的Android Application。
 

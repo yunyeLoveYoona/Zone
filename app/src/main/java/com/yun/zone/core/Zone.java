@@ -1,7 +1,6 @@
 package com.yun.zone.core;
 
 import android.content.Context;
-import android.widget.TextView;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -23,6 +22,7 @@ public class Zone {
     protected Context context;
     private HashMap<String, List<ZoneModel>> dataCache;
     private int lineNum;
+    protected int MAX_NUM = 0;
 
 
     /**
@@ -249,6 +249,14 @@ public class Zone {
             temp = new ArrayList<ZoneModel>();
             temp.add(model);
             _this.dataCache.put(modelClass.getName(), temp);
+        }
+        if (_this.getMAX_NUM() > 0 && model.lineNum > _this.getMAX_NUM()) {
+            temp.remove(0);
+            for (ZoneModel zoneModel : temp) {
+                zoneModel.lineNum = zoneModel.lineNum - 1;
+            }
+            File file = FileUtil.createFile(_this.context, _this.userName, model.getClass().getName());
+            FileUtil.deleteLine(file, 1);
         }
     }
 
@@ -559,6 +567,16 @@ public class Zone {
         return orderBy(temp, modelClass, sortField, sortMode);
     }
 
+
+    public static int getMAX_NUM() throws NullPointerException {
+        checkThis();
+        return _this.MAX_NUM;
+    }
+
+    public static void setMAX_NUM(int max_num) throws NullPointerException {
+        checkThis();
+        _this.MAX_NUM = max_num;
+    }
 
     public enum WhereCondition {
         EQUALS, BEFORE, AFTER, CONTAINS, MORE_THAN, LESS_THAN

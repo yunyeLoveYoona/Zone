@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        Zone.setMAX_NUM(10);
 
     }
 }

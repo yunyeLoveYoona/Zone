@@ -89,7 +89,12 @@ public class Zone {
                 lineNum = 1;
                 String fileName = file.getName();
                 String content = FileUtil.read(file);
-                if (content.length() > 1) {
+                if (content.length() > 2) {
+                    if (!String.valueOf(content.charAt(content.length() - 1)).equals("\n")) {
+                        String[] modelStrList = content.split("\n");
+                        FileUtil.deleteLine(file, modelStrList.length);
+                        content = FileUtil.read(file);
+                    }
                     String[] modelStrList = content.split("\n");
                     List<ZoneModel> zoneModels = new ArrayList<ZoneModel>();
                     for (String modelStr : modelStrList) {
@@ -97,6 +102,7 @@ public class Zone {
                     }
                     dataCache.put(fileName, zoneModels);
                 }
+
             }
         }
     }
